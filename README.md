@@ -25,14 +25,15 @@ Before you begin, ensure you have the following installed:
 
 1. Clone the repository:
  - git clone repository-url
- - cd to project-directory
+ - cd to your project-directory
 2. Install dependencies:
  - npm install
 3. Create a `.env` file in the root directory and add the following:
  - PORT=3000
  - MONGODB_URI=mongodb://localhost:27017/library
  - JWT_SECRET=your_jwt_secret_key
-- JWT_EXPIRE=30d
+ - JWT_EXPIRE=30d
+4. To run the application locally, go to frontend/css/main.js and change the api url to http://localhost:3000/api/
 
 ## Running the Application
 
