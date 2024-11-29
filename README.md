@@ -24,8 +24,8 @@ Before you begin, ensure you have the following installed:
 ## Installation
 
 1. Clone the repository:
- - git clone <repository-url>
- - cd <project-directory>
+ - git clone repository-url
+ - cd to project-directory
 2. Install dependencies:
  - npm install
 3. Create a `.env` file in the root directory and add the following:
