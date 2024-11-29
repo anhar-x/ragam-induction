@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-brand">Library System</div>
+        <div class="nav-items">
+            <span id="userInfo">Guest</span>
+            <a href="login.html" id="loginBtn">Login</a>
+            <button id="logoutBtn" style="display: none;">Logout</button>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <h1>Book Collection</h1>
+            
+            <div class="book-form" id="bookForm">
+                <h2>Add New Book</h2>
+                <form id="addBookForm">
+                    <input type="text" placeholder="Title" name="title" required>
+                    <input type="text" placeholder="Author" name="author" required>
+                    <input type="number" placeholder="Published Year" name="published_year" required>
+                    <input type="text" placeholder="Genre" name="genre" required>
+                    <input type="number" placeholder="Available Copies" name="available_copies" required>
+                    <button type="submit">Add Book</button>
+                </form>
+            </div>
+
+            <div class="books-container" id="booksContainer">
+                <!-- Books will be dynamically added here -->
+            </div>
+        </div>
+    </main>
+    <script src="js/main.js"></script>
+</body>
+</html>
