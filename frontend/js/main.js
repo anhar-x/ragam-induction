@@ -1,5 +1,7 @@
 // API Base URL (fix port number)
 const API_URL = 'https://ragam-induction.onrender.com/api';
+// const API_URL = 'http://localhost:3000/api';
+
 let token = localStorage.getItem('token');
 
 // Add loading and error message helpers

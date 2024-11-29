@@ -17,6 +17,7 @@
     <main>
         <div class="container">
             <div class="auth-container">
+                <div id="message" class="message" style="display: none;"></div>
                 <div class="auth-box">
                     <h2>Login</h2>
                     <form id="loginForm">
@@ -28,14 +29,35 @@
 
                 <div class="auth-box">
                     <h2>Register</h2>
-                    <form id="registerForm">
-                        <input type="text" placeholder="Name" name="name" required>
-                        <input type="email" placeholder="Email" name="email" required>
-                        <input type="password" placeholder="Password" name="password" required>
-                        <select name="membership_type">
-                            <option value="Regular">Regular</option>
-                            <option value="Premium">Premium</option>
-                        </select>
+                    <form id="registerForm" novalidate>
+                        <div class="form-group">
+                            <input type="text" placeholder="Name" name="name" required 
+                                   pattern=".{2,}" title="Name must be at least 2 characters long">
+                            <div class="form-error">Name is required</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="email" placeholder="Email" name="email" required 
+                                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                            <div class="form-error">Please enter a valid email address</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <input type="password" placeholder="Password" name="password" required 
+                                   minlength="6" id="password">
+                            <div class="form-error">Password must be at least 6 characters long</div>
+                            <ul class="password-requirements">
+                                <li>At least 6 characters long</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="form-group">
+                            <select name="membership_type" required>
+                                <option value="Regular">Regular</option>
+                                <option value="Premium">Premium</option>
+                            </select>
+                        </div>
+                        
                         <button type="submit">Register</button>
                     </form>
                 </div>

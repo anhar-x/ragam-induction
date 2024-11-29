@@ -20,6 +20,24 @@ exports.register = async (req, res) => {
       data: user
     });
   } catch (error) {
+    // Handle mongoose validation errors
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map(err => err.message);
+      return res.status(400).json({
+        success: false,
+        message: messages[0], // Send the first validation error message
+        errors: messages
+      });
+    }
+    
+    // Handle duplicate key error (email already exists)
+    if (error.code === 11000) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email is already registered'
+      });
+    }
+
     res.status(400).json({
       success: false,
       message: 'Failed to register user',
