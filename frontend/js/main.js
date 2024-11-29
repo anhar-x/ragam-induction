@@ -121,31 +121,45 @@ async function deleteBook(id) {
     }
 }
 
-// Edit book
-async function editBook(id) {
-    // For simplicity, we'll just prompt for new values
-    const newTitle = prompt('Enter new title:');
-    if (!newTitle) return;
+// Add these functions for modal handling
+function openEditModal(book) {
+    const modal = document.getElementById('editModal');
+    const form = document.getElementById('editBookForm');
     
+    // Populate form fields
+    document.getElementById('editBookId').value = book._id;
+    document.getElementById('editTitle').value = book.title;
+    document.getElementById('editAuthor').value = book.author;
+    document.getElementById('editYear').value = book.published_year;
+    document.getElementById('editGenre').value = book.genre;
+    document.getElementById('editCopies').value = book.available_copies;
+    
+    modal.style.display = 'block';
+}
+
+function closeEditModal() {
+    const modal = document.getElementById('editModal');
+    modal.style.display = 'none';
+}
+
+// Update the editBook function
+async function editBook(bookId) {
     try {
-        const response = await fetch(`${API_URL}/books/${id}`, {
-            method: 'PUT',
+        const response = await fetch(`${API_URL}/books/${bookId}`, {
+            method: 'GET',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({ title: newTitle })
+            }
         });
-        const data = await response.json();
         
+        const data = await response.json();
         if (!data.success) {
-            throw new Error(data.message || 'Failed to update book');
+            throw new Error(data.message || 'Failed to fetch book details');
         }
         
-        showMessage('Book updated successfully');
-        loadBooks();
+        openEditModal(data.data);
     } catch (error) {
-        console.error('Error updating book:', error);
+        console.error('Error fetching book details:', error);
         showMessage(error.message, true);
     }
 }
@@ -303,6 +317,51 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.removeItem('token');
             window.location.reload();
         });
+    }
+
+    // Edit Book Form
+    const editBookForm = document.getElementById('editBookForm');
+    if (editBookForm) {
+        editBookForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const bookId = document.getElementById('editBookId').value;
+            const submitBtn = editBookForm.querySelector('button[type="submit"]');
+            setLoading(submitBtn, true);
+            
+            try {
+                const formData = new FormData(editBookForm);
+                const response = await fetch(`${API_URL}/books/${bookId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                });
+                
+                const data = await response.json();
+                if (!data.success) {
+                    throw new Error(data.message || 'Failed to update book');
+                }
+                
+                showMessage('Book updated successfully');
+                closeEditModal();
+                loadBooks();
+            } catch (error) {
+                console.error('Error updating book:', error);
+                showMessage(error.message, true);
+            } finally {
+                setLoading(submitBtn, false);
+            }
+        });
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('editModal');
+        if (event.target === modal) {
+            closeEditModal();
+        }
     }
 });
 
