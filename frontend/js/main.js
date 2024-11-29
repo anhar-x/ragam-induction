@@ -1,5 +1,5 @@
 // API Base URL (fix port number)
-const API_URL = 'https://ragam-induction.onrender.com';
+const API_URL = 'https://ragam-induction.onrender.com/api';
 let token = localStorage.getItem('token');
 
 // Add loading and error message helpers
