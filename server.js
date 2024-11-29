@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
+// const userRoutes = require('./routes/userRoutes');
 
 dotenv.config();
 
@@ -14,7 +15,7 @@ connectDB();
 
 //Routes
 app.use('/api/books', require('./routes/bookRoutes'));
-// app.use('/api/users', require('./routes/userRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
 
 app.use((err, req, res, next) => {
   console.log(err.message);

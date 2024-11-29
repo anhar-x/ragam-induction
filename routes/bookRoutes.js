@@ -7,14 +7,16 @@ const {
   updateBook,
   deleteBook
 } = require('../controllers/bookController');
+const { protect } = require('../middleware/auth');
 
-router.route('/')
-  .get(getAllBooks)
-  .post(createBook);
+// Public routes - anyone can view books
+router.get('/', getAllBooks);
+router.get('/:id', getBook);
 
-router.route('/:id')
-  .get(getBook)
-  .put(updateBook)
-  .delete(deleteBook);
+// Protected routes - only authenticated users can modify books
+router.use(protect); // All routes after this will require authentication
+router.post('/', createBook);
+router.put('/:id', updateBook);
+router.delete('/:id', deleteBook);
 
 module.exports = router;
